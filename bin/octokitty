@@ -3,7 +3,9 @@
 require 'octokit'
 require 'json'
 
-github = Octokit::Client.new auto_paginate: true, access_token: ENV.fetch('GITHUB_ACCESS_TOKEN')
+DFLT_ENDPT = 'https://github.com/api/v3'
+
+github = Octokit::Client.new auto_paginate: true, access_token: ENV.fetch('GITHUB_ACCESS_TOKEN'), api_endpoint: ENV.fetch( 'GITHUB_API_ENDPOINT', DFLT_ENDPT )
 command = File.basename($0).gsub('-', '_')
 
 if command == 'octokitty'
