@@ -32,4 +32,8 @@ arguments = ARGV.shift(required.length)
 options = ARGV.select { |a| a.start_with? '--' }.map{ |a| a[2..-1].to_sym }.zip(ARGV.reject { |a| a.start_with? '--' }).to_h
 
 response = github.method(command).call(*arguments, options)
-puts JSON.dump(response.class == Sawyer::Resource ? response.to_h : response.map(&:to_h))
+if response.is_a?(TrueClass) || response.is_a?(FalseClass) 
+    puts response.to_s
+else
+    puts JSON.dump(response.class == Sawyer::Resource ? response.to_h : response.map(&:to_h))
+end
